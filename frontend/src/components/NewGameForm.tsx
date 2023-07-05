@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useId } from 'react';
 import { TextField, Button } from '@mui/material';
 import { GameContext } from '../contexts/GameContext';
 import { Game } from '../types';
@@ -7,14 +7,16 @@ import { createAPI } from '../services/gameService';
 const initialNewGame: Game = {
     id: 0,
     name: '',
+    giver: '',
     originCity: '',
     currentCity: '',
-    startDate: '',
+    startDate: new Date().toISOString().slice(0, 10),
     lastMoveDate: '',
     numberOfMoves: 0
 };
 
 const NewGameForm: React.FC = () => {
+  console.log(useId());
   const [newGame, setNewGame] = useState<Game>(initialNewGame); 
   const { dispatch } = useContext(GameContext);
 
@@ -34,40 +36,29 @@ const NewGameForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit}>
         <TextField 
-            label="Game Name" 
+            label="Nom du jeu" 
             variant="outlined"
             value={newGame.name}
             onChange={(e) => setNewGame({...newGame, name: e.target.value})}
         />
         <TextField 
-            label="Origin City" 
+            label="Donneur initial" 
             variant="outlined"
             value={newGame.originCity}
             onChange={(e) => setNewGame({...newGame, originCity: e.target.value})}
         />
         <TextField 
-            label="Current City" 
+            label="Ville d'origine" 
             variant="outlined"
             value={newGame.currentCity}
             onChange={(e) => setNewGame({...newGame, currentCity: e.target.value})}
         />
         <TextField  
-            label="Start Date"
+            type="date"
+            label="Date du don"
             variant="outlined"
             value={newGame.startDate}
             onChange={(e) => setNewGame({...newGame, startDate: e.target.value})}
-        />
-        <TextField
-            label="Last Move Date"
-            variant="outlined"
-            value={newGame.lastMoveDate}
-            onChange={(e) => setNewGame({...newGame, lastMoveDate: e.target.value})}
-        />
-        <TextField
-            label="Number of Moves"
-            variant="outlined"
-            value={newGame.numberOfMoves}
-            onChange={(e) => setNewGame({...newGame, numberOfMoves: parseInt(e.target.value)})}
         />
       <Button type="submit" variant="contained" sx={{ ml: 1 }}>Add New Game</Button>
     </form>
