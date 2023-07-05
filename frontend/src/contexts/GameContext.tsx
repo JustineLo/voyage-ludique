@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { GameAction, GameState } from '../types';
+import { getAllAPI } from '../services/gameService';
 
 interface GameContextProps {
     state: GameState;
@@ -7,7 +8,7 @@ interface GameContextProps {
 }
 
 export const defaultState: GameState = {
-    games: [],
+    games: await getAllAPI(),
     searchResult: [],
     selectedGame: null,
   };

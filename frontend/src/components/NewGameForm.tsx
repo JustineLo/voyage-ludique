@@ -1,4 +1,4 @@
-import React, { useState, useContext, useId } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField, Button } from '@mui/material';
 import { GameContext } from '../contexts/GameContext';
 import { Game } from '../types';
@@ -16,7 +16,6 @@ const initialNewGame: Game = {
 };
 
 const NewGameForm: React.FC = () => {
-  console.log(useId());
   const [newGame, setNewGame] = useState<Game>(initialNewGame); 
   const { dispatch } = useContext(GameContext);
 

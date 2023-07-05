@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Game } from '../types';
-import { getAllAPI } from '../services/gameService';
+import { GameContext } from '../contexts/GameContext';
 
 const GameList: React.FC = () => {
-  const [games, setGames] = useState<Game[]>([]);
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      const fetchedGames = await getAllAPI();
-      setGames(fetchedGames);
-    };
-    
-    fetchGames();
-  }, []);
+  const { state } = useContext(GameContext);
 
   return (
     <TableContainer component={Paper}>
@@ -27,7 +19,7 @@ const GameList: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {games.map((game: Game) => (
+          {state.games.map((game: Game) => (
             <TableRow key={game.id}>
               <TableCell>{game.id}</TableCell>
               <TableCell>{game.name}</TableCell>
