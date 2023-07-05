@@ -19,4 +19,9 @@ interface SetGamesAction {
     payload: Game[];
 }
 
-export type GameAction = SetGamesAction;
+interface AddGameAction {
+    type: 'ADD_GAME';
+    payload: Game;
+}
+
+export type GameAction = SetGamesAction | AddGameAction;
