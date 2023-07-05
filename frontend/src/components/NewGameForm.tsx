@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { TextField, Button } from '@mui/material';
 import { GameContext } from '../contexts/GameContext';
 import { Game } from '../types';
+import { createAPI } from '../services/gameService';
 
 const initialNewGame: Game = {
     id: 0,
@@ -17,11 +18,18 @@ const NewGameForm: React.FC = () => {
   const [newGame, setNewGame] = useState<Game>(initialNewGame); 
   const { dispatch } = useContext(GameContext);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch({ type: 'ADD_GAME', payload: newGame });
-    setNewGame(initialNewGame); 
+
+    try {
+      const createdGame = await createAPI(newGame);
+      dispatch({ type: 'ADD_GAME', payload: createdGame });
+      setNewGame(initialNewGame);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit}>

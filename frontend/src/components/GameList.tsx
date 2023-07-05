@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import gameService from '../services/gameService';
 import { Game } from '../types';
+import { getAllAPI } from '../services/gameService';
 
 const GameList: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
     const fetchGames = async () => {
-      const fetchedGames = await gameService.getAll();
+      const fetchedGames = await getAllAPI();
       setGames(fetchedGames);
     };
     
