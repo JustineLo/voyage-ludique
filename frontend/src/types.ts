@@ -10,6 +10,8 @@ export interface Game {
 
 export interface GameState {
     games: Game[];
+    searchResult: string[],
+    selectedGame: Game | null
 }
 
 interface SetGamesAction {

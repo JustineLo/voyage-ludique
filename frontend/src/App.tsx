@@ -1,15 +1,11 @@
 import { useReducer } from "react";
 import { gameReducer } from "./reducers/gameReducer";
-import { GameContext } from "./contexts/GameContext";
+import { GameContext, defaultState } from "./contexts/GameContext";
 import Layout from "./layout/Layout";
 
-const initialState = {
-  games: [],
-};
 
 function App() {
-
-  const [state, dispatch] = useReducer(gameReducer, initialState);
+  const [state, dispatch] = useReducer(gameReducer, defaultState);
 
   return (
       <GameContext.Provider value={{ state, dispatch }}>

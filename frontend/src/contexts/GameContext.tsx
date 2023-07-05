@@ -6,5 +6,14 @@ interface GameContextProps {
     dispatch: React.Dispatch<GameAction>;
 }
 
-export const GameContext = createContext<GameContextProps | undefined>(undefined);
+export const defaultState: GameState = {
+    games: [],
+    searchResult: [],
+    selectedGame: null,
+  };
+
+export const GameContext = createContext<GameContextProps>({
+    state: defaultState,
+    dispatch: () => null,
+});
 
