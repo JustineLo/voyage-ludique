@@ -11,4 +11,58 @@ router.get(
   })
 );
 
+router.get(
+  '/games/:id',
+  asyncHandler(async (req, res) => {
+    const [rows, fields] = await pool.execute(
+      'SELECT * FROM games WHERE id = ?', 
+      [req.params.id]
+    );
+
+    if (rows.length > 0) {
+      res.json(rows[0]);
+    } else {
+      res.status(404).send('Game not found');
+    }
+  })
+);
+
+router.post(
+  '/games',
+  asyncHandler(async (req, res) => {
+    const { name, originCity, currentCity } = req.body;
+    const [result] = await pool.execute(
+      'INSERT INTO games (name, originCity, currentCity) VALUES (?, ?, ?)', 
+      [name, originCity, currentCity]
+    );
+    res.status(201).json({ id: result.insertId, name, originCity, currentCity });
+  })
+);
+
+router.put(
+  '/games/:id',
+  asyncHandler(async (req, res) => {
+    const { name, originCity, currentCity } = req.body;
+    await pool.execute(
+      'UPDATE games SET name = ?, originCity = ?, currentCity = ? WHERE id = ?', 
+      [name, originCity, currentCity, req.params.id]
+    );
+    res.status(204).send();
+  })
+);
+
+router.delete(
+  '/games/:id',
+  asyncHandler(async (req, res) => {
+    await pool.execute(
+      'DELETE FROM games WHERE id = ?', 
+      [req.params.id]
+    );
+    res.status(204).send();
+  })
+);
+
+module.exports = router;
+
+
 module.exports = router;
