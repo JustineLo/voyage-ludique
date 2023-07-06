@@ -30,14 +30,15 @@ router.get(
 router.post(
   '/games',
   asyncHandler(async (req, res) => {
-    const { name, originCity, currentCity } = req.body;
+    const { name, giver, originCity, currentCity, startDate, numberOfMoves } = req.body;
     const [result] = await pool.execute(
-      'INSERT INTO games (name, originCity, currentCity) VALUES (?, ?, ?)', 
-      [name, originCity, currentCity]
+      'INSERT INTO games (name, giver, originCity, currentCity, startDate, numberOfMoves) VALUES (?, ?, ?, ?, ?, ?)', 
+      [name, giver, originCity, currentCity, startDate, numberOfMoves]
     );
-    res.status(201).json({ id: result.insertId, name, originCity, currentCity });
+    res.status(201).json({ id: result.insertId, name, giver, originCity, currentCity, startDate, numberOfMoves });
   })
 );
+
 
 router.put(
   '/games/:id',
