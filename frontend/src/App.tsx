@@ -9,6 +9,7 @@ import NewGame from "./pages/NewGame";
 
 function App() {
   const [state, dispatch] = useReducer(gameReducer, defaultState);
+  console.log(state);
 
   return (
       <GameContext.Provider value={{ state, dispatch }}>

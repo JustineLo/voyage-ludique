@@ -9,15 +9,26 @@ export interface Game {
     numberOfMoves: number;
 }
 
-export interface GameState {
-    games: Game[];
-    searchResult: string[],
-    selectedGame: Game | null
+export interface Move {
+    id: number;
+    gameId: number;
+    gameName: string;
+    giver: string;
+    receiver: string;
+    originCity: string;
+    currentCity: string;
+    date: string;
 }
 
-interface SetGamesAction {
-    type: 'SET_GAMES';
-    payload: Game[];
+export interface GameState {
+    games: Game[];
+    searchedGame: Game | null;
+    displayedMoves: Move[];
+}
+
+interface SetSearchedGameAction {
+    type: 'SET_SEARCHED_GAME';
+    payload: Game;
 }
 
 interface AddGameAction {
@@ -25,4 +36,9 @@ interface AddGameAction {
     payload: Game;
 }
 
-export type GameAction = SetGamesAction | AddGameAction;
+interface SetDisplayedMovesAction {
+    type: 'SET_DISPLAYED_MOVES';
+    payload: Move[];
+}
+
+export type GameAction = SetSearchedGameAction | AddGameAction | SetDisplayedMovesAction;

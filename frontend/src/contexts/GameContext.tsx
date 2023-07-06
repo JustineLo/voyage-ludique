@@ -9,8 +9,8 @@ interface GameContextProps {
 
 export const defaultState: GameState = {
     games: await getAllAPI(),
-    searchResult: [],
-    selectedGame: null,
+    searchedGame: null,
+    displayedMoves: [],
   };
 
 export const GameContext = createContext<GameContextProps>({
