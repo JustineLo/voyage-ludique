@@ -28,7 +28,7 @@ export interface GameState {
 
 interface SetSearchedGameAction {
     type: 'SET_SEARCHED_GAME';
-    payload: Game;
+    payload: Game | null;
 }
 
 interface AddGameAction {
