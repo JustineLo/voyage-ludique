@@ -18,6 +18,7 @@ export interface Move {
     originCity: string;
     currentCity: string;
     date: string;
+    comment: string;
 }
 
 export interface GameState {
@@ -31,14 +32,19 @@ interface SetSearchedGameAction {
     payload: Game | null;
 }
 
-interface AddGameAction {
-    type: 'ADD_GAME';
-    payload: Game;
-}
-
 interface SetDisplayedMovesAction {
     type: 'SET_DISPLAYED_MOVES';
     payload: Move[];
 }
 
-export type GameAction = SetSearchedGameAction | AddGameAction | SetDisplayedMovesAction;
+interface AddGameAction {
+    type: 'ADD_GAME';
+    payload: Game;
+}
+
+interface AddMoveAction {
+    type: 'ADD_MOVE';
+    payload: Move;
+}
+
+export type GameAction = SetSearchedGameAction | SetDisplayedMovesAction | AddGameAction | AddMoveAction;

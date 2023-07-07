@@ -1,8 +1,9 @@
+
 import { createContext } from 'react';
 import { GameAction, GameState } from '../types';
 import { getAllAPI } from '../services/gameService';
 
-interface GameContextProps {
+export interface GameContextProps {
     state: GameState;
     dispatch: React.Dispatch<GameAction>;
 }

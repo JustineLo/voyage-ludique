@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Game } from "../types";
-import { GameContext } from "../contexts/GameContext";
+import { GameContext, GameContextProps } from "../contexts/GameContext";
+import NewMoveForm from "../components/NewMoveForm";
 
 function GameDetail() {
     const { gameId } = useParams();
-    const { state } = useContext(GameContext);
+    const { state } = useContext<GameContextProps>(GameContext);
 
     if (!gameId) {
         return <div>Game not found</div>
@@ -40,7 +41,7 @@ function GameDetail() {
             <p>
                 <span>Number of Moves: {game.numberOfMoves}</span>
             </p>
-            
+            <NewMoveForm game={game} />
         </div>
     )
 }
