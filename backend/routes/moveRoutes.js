@@ -13,6 +13,15 @@ router.get('/moves/:id', asyncHandler(async (req, res) => {
     res.json(rows[0]);
 }));
 
+router.get('/games/:id/moves', asyncHandler(async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        'SELECT * FROM moves WHERE gameId = ? ORDER BY date DESC LIMIT 10',
+        [req.params.id]
+    );
+    res.json(rows);
+}));
+  
+
 router.post('/moves', asyncHandler(async (req, res) => {
     const { gameId, gameName, originCity, giver, currentCity, receiver, date, comment } = req.body;
     const [result] = await pool.execute(
