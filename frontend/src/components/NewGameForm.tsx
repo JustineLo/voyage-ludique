@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { TextField, Button } from '@mui/material';
 import { GameContext } from '../contexts/GameContext';
 import { Game } from '../types';
-import { createAPI } from '../services/gameService';
+import { createGameAPI } from '../services/gameService';
 
 const initialNewGame: Game = {
     id: 0,
@@ -23,7 +23,7 @@ const NewGameForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const createdGame = await createAPI(newGame);
+      const createdGame = await createGameAPI(newGame);
       dispatch({ type: 'ADD_GAME', payload: createdGame });
       setNewGame(initialNewGame);
     } catch (error) {

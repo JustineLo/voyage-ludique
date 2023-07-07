@@ -9,7 +9,7 @@ export const getMovesByGameIdAPI = async (gameId: number) => {
 };
 
 export const getMoveAPI = async (moveId: number) => {
-  const response = await axios.get(`${baseUrl}/moves/${moveId}`);
+  const response = await axios.get(`${baseUrl}/${moveId}`);
   return response.data;
 };
 
@@ -19,11 +19,11 @@ export const createMoveAPI = async (move: Move) => {
 };
 
 export const updateMoveAPI = async (moveId: number, move: Partial<Move>) => {
-  const response = await axios.put(`${baseUrl}/moves/${moveId}`, move);
+  const response = await axios.put(`${baseUrl}/${moveId}`, move);
   return response.data;
 };
 
 export const deleteMoveAPI = async (moveId: number) => {
-  const response = await axios.delete(`${baseUrl}/moves/${moveId}`);
+  const response = await axios.delete(`${baseUrl}/${moveId}`);
   return response.data;
 };
