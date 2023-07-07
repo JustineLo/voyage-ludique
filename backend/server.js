@@ -6,6 +6,8 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', gameRoutes);
+app.use('/api', moveRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to Game Tracker API!');
@@ -14,5 +16,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-app.use('/api', gameRoutes);
