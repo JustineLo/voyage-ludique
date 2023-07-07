@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
-import { Game } from "../types";
+import { useContext, useEffect } from "react";
+import { Game, Move } from "../types";
 import { GameContext, GameContextProps } from "../contexts/GameContext";
 import NewMoveForm from "../components/NewMoveForm";
+import MovesList from "../components/MovesList";
+import { getMovesByGameIdAPI } from "../services/moveService";
 
-function GameDetail() {
+ function GameDetail() {
     const { gameId } = useParams();
-    const { state } = useContext<GameContextProps>(GameContext);
+    const { state, dispatch } = useContext<GameContextProps>(GameContext);
 
     if (!gameId) {
         return <div>Game not found</div>
@@ -14,7 +16,17 @@ function GameDetail() {
 
     const game: Game | undefined = state.games.find((game: Game) => game.id === parseInt(gameId));
 
-    if (!game) {
+    useEffect(() => {
+        const fetchGameMoves = async () => {
+            if (game) {
+                const gameMoves: Move[] = await getMovesByGameIdAPI(game.id);
+                dispatch({ type: 'SET_DISPLAYED_MOVES', payload: gameMoves });
+            }
+        };
+        fetchGameMoves();
+    }, [game, dispatch]);
+
+    if (!gameId || !game) {
         return <div>Game not found</div>
     }
 
@@ -42,6 +54,7 @@ function GameDetail() {
                 <span>Number of Moves: {game.numberOfMoves}</span>
             </p>
             <NewMoveForm game={game} />
+            <MovesList />
         </div>
     )
 }

@@ -18,7 +18,7 @@ export interface Move {
     originCity: string;
     currentCity: string;
     date: string;
-    comment: string;
+        comment: string;
 }
 
 export interface GameState {

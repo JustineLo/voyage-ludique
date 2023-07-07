@@ -23,13 +23,13 @@ const NewMoveForm = ({ game }: NewMoveFormProps) => {
     };
 
     const [newMove, setNewMove] = useState<Move>(initialNewMove); 
-    const { dispatch } = useContext(GameContext);
+    const { dispatch, state } = useContext(GameContext);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const createdMove = await createMoveAPI(newMove);
-            dispatch({ type: 'ADD_MOVE', payload: createdMove });
+            const createdMove: Move = await createMoveAPI(newMove);
+            dispatch({ type: 'SET_DISPLAYED_MOVES', payload: [...state.displayedMoves, createdMove] });
             setNewMove(initialNewMove);
         } catch (error) {
             console.error(error);
@@ -70,7 +70,7 @@ const NewMoveForm = ({ game }: NewMoveFormProps) => {
             value={newMove.date}
             onChange={(e) => setNewMove({...newMove, date: e.target.value})}
         />
-      <Button type="submit" variant="contained" sx={{ ml: 1 }}>Add New Game</Button>
+      <Button type="submit" variant="contained" sx={{ ml: 1 }}>Add New Move</Button>
     </form>
   );
 }
