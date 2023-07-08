@@ -20,6 +20,16 @@ router.get('/games/:id/moves', asyncHandler(async (req, res) => {
     );
     res.json(rows);
 }));
+
+router.get(
+    '/latest',
+    asyncHandler(async (req, res) => {
+      const [rows] = await pool.execute(
+        'SELECT * FROM moves ORDER BY date DESC LIMIT 10'
+      );
+      res.json(rows);
+    })
+);
   
 
 router.post('/moves', asyncHandler(async (req, res) => {
