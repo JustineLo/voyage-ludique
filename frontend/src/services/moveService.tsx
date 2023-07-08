@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Move } from '../types';
 
-const baseUrl = 'http://localhost:5001/api'; 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const getMovesByGameIdAPI = async (gameId: number) => {
   const response = await axios.get(`${baseUrl}/games/${gameId}/moves`);

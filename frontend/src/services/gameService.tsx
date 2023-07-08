@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Game } from '../types';
 
-const baseUrl = 'http://localhost:5001/api/games';
+const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/games`;
 
 export const getAllGamesAPI = async (): Promise<Game[]> => {
   const response = await axios.get<Game[]>(baseUrl);
