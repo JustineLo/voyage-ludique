@@ -13,6 +13,11 @@ export const getMoveAPI = async (moveId: number) => {
   return response.data;
 };
 
+export const getLatestMovesAPI = async () => {
+  const response = await axios.get(`${baseUrl}/latest`);
+  return response.data;
+};
+
 export const createMoveAPI = async (move: Move) => {
   const response = await axios.post(`${baseUrl}/moves`, move);
   return response.data;

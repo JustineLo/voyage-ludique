@@ -1,22 +1,39 @@
-import React, { useContext, useState, } from 'react';
+import React, { useContext, useEffect, useState, } from 'react';
 import { TextField, Button, ButtonGroup, Autocomplete } from '@mui/material';
-import { GameContext } from '../contexts/GameContext';
-import { Game } from '../types';
+import { GameContext, GameContextProps } from '../contexts/GameContext';
+import { Game, Move } from '../types';
+import { getLatestMovesAPI, getMovesByGameIdAPI } from '../services/moveService';
 
 const GameSearch: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const { state, dispatch } = useContext<GameContextProps>(GameContext);
+  const [searchedGame, setSearchedGame] = useState<Game | null>(state.searchedGame);
   const [searchList, setSearchList] = useState<string[]>([]);
-  const { state, dispatch } = useContext(GameContext);
+  let latestMoves: Move[] = [];
+
+  useEffect(() => {
+    const fetchGameMoves = async () => {
+      if(!searchedGame) {
+        latestMoves = await getLatestMovesAPI();
+        dispatch({ type: 'SET_DISPLAYED_MOVES', payload: latestMoves });
+      } else {
+        const gameMoves: Move[] = await getMovesByGameIdAPI(searchedGame.id);
+        dispatch({ type: 'SET_DISPLAYED_MOVES', payload: gameMoves });
+      }
+    };
+    fetchGameMoves();
+}, [searchedGame]);
 
   const handleSearch = (value: string | null) => {
     if (!value) {
-      dispatch({ type: 'SET_DISPLAYED_MOVES', payload: [] });
       dispatch({ type: 'SET_SEARCHED_GAME', payload: null });
+      setSearchedGame(null);
       return;
     }
-    const searchedGames = state.games.filter((game: Game) => game.name.toLowerCase().includes(value.toLowerCase()));
-
-    //TODO search moves
+    const foundGame: Game | null = state.games.find((game: Game) => game.name === value) || null;
+    if(foundGame) {
+      dispatch({ type: 'SET_SEARCHED_GAME', payload: state.games.find((game: Game) => game.name === value) || null });
+      setSearchedGame(foundGame);
+    }
   };
 
   function handleClickName() {

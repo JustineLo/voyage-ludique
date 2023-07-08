@@ -11,7 +11,7 @@ interface NewMoveFormProps {
 const NewMoveForm = ({ game }: NewMoveFormProps) => {
 
     const initialNewMove: Move = {
-        id: 0,
+        id: Math.floor((Math.random() * 999) + 100),
         gameId: game.id,
         gameName: game.name,
         giver: '',
