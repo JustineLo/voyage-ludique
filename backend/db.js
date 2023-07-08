@@ -1,13 +1,8 @@
-const mysql = require('mysql2');
+const { createClient } = require('@supabase/supabase-js');
 
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'game_tracker_db',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+const DB_URL = process.env.DB_URL;
+const DB_KEY = process.env.DB_KEY;
 
-module.exports = pool.promise();
+const database = createClient(DB_URL, DB_KEY);
+
+module.exports = database;

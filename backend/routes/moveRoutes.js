@@ -3,55 +3,91 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const pool = require('../db');
 
-router.get('/moves', asyncHandler(async (req, res) => {
-    const [rows, fields] = await pool.execute('SELECT * FROM moves');
-    res.json(rows);
-}));
-  
-router.get('/moves/:id', asyncHandler(async (req, res) => {
-    const [rows, fields] = await pool.execute('SELECT * FROM moves WHERE id = ?', [req.params.id]);
-    res.json(rows[0]);
-}));
+router.get(
+    '/moves',
+    asyncHandler(async (req, res) => {
+        const { data, error } = await database
+        .from('moves')
+        .select('*');
+        if (error) throw error;
+        res.json(data);
+    })
+);
 
-router.get('/games/:id/moves', asyncHandler(async (req, res) => {
-    const [rows, fields] = await pool.execute(
-        'SELECT * FROM moves WHERE gameId = ? ORDER BY date DESC LIMIT 10',
-        [req.params.id]
-    );
-    res.json(rows);
-}));
+router.get(
+    '/moves/:id',
+    asyncHandler(async (req, res) => {
+        const { data, error } = await database
+        .from('moves')
+        .select('*')
+        .eq('id', req.params.id);
+        if (error) throw error;
+        res.json(data[0]);
+    })
+);
+
+router.get(
+    '/games/:id/moves',
+    asyncHandler(async (req, res) => {
+        const { data, error } = await database
+        .from('moves')
+        .select('*')
+        .eq('gameId', req.params.id)
+        .order('date', { ascending: false })
+        .limit(10);
+        if (error) throw error;
+        res.json(data);
+    })
+);
 
 router.get(
     '/latest',
     asyncHandler(async (req, res) => {
-      const [rows] = await pool.execute(
-        'SELECT * FROM moves ORDER BY date DESC LIMIT 10'
-      );
-      res.json(rows);
+        const { data, error } = await database
+        .from('moves')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(10);
+        if (error) throw error;
+        res.json(data);
     })
 );
-  
 
-router.post('/moves', asyncHandler(async (req, res) => {
-    const { gameId, gameName, originCity, giver, currentCity, receiver, date, comment } = req.body;
-    const [result] = await pool.execute(
-        'INSERT INTO moves (gameId, gameName, originCity, giver, currentCity, receiver, date, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
-        [gameId, gameName, originCity, giver, currentCity, receiver, date, comment]
-    );
-    res.status(201).json({ id: result.insertId, ...req.body });
-}));
+router.post(
+    '/moves',
+    asyncHandler(async (req, res) => {
+        const { gameId, gameName, originCity, giver, currentCity, receiver, date, comment } = req.body;
+        const { data, error } = await database
+        .from('moves')
+        .insert([{ gameId, gameName, originCity, giver, currentCity, receiver, date, comment }]);
+        if (error) throw error;
+        res.status(201).json(data[0]);
+    })
+);
 
-router.put('/moves/:id', asyncHandler(async (req, res) => {
-    const { gameId, originCity, giverName, receiverCity, receiverName, moveDate, comment } = req.body;
-    await pool.execute(
-        'UPDATE moves SET gameId = ?, originCity = ?, giverName = ?, receiverCity = ?, receiverName = ?, moveDate = ?, comment = ? WHERE id = ?',
-        [gameId, originCity, giverName, receiverCity, receiverName, moveDate, comment, req.params.id]
-    );
-    res.status(200).json({ id: req.params.id, ...req.body });
-    }));
-    router.delete('/moves/:id', asyncHandler(async (req, res) => {
-    await pool.execute('DELETE FROM moves WHERE id = ?', [req.params.id]);
-    res.status(204).end();
-}));
+router.put(
+    '/moves/:id',
+    asyncHandler(async (req, res) => {
+        const { gameId, originCity, giverName, receiverCity, receiverName, moveDate, comment } = req.body;
+        const { data, error } = await database
+        .from('moves')
+        .update({ gameId, originCity, giverName, receiverCity, receiverName, moveDate, comment })
+        .eq('id', req.params.id);
+        if (error) throw error;
+        res.status(200).json(data[0]);
+    })
+);
+
+router.delete(
+    '/moves/:id',
+    asyncHandler(async (req, res) => {
+        const { data, error } = await database
+        .from('moves')
+        .delete()
+        .eq('id', req.params.id);
+        if (error) throw error;
+        res.status(204).end();
+    })
+);
 
 module.exports = router;
