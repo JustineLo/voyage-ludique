@@ -66,3 +66,5 @@ router.delete(
     res.status(204).send();
   })
 );
+
+module.exports = router;
