@@ -37,8 +37,6 @@ router.post(
     const { data, error } = await database
       .from('games')
       .insert([{ name, giver, originCity, currentCity, startDate, numberOfMoves }])
-    if (error) throw error;
-    res.status(201).json(data[0]);
   })
 );
 

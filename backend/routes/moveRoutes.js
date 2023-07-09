@@ -60,7 +60,6 @@ router.post(
         const { data, error } = await database
         .from('moves')
         .insert([{ gameId, gameName, originCity, giver, currentCity, receiver, date, comment }]);
-        res.json(data);
     })
 );
 
