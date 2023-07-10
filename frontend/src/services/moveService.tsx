@@ -8,6 +8,11 @@ export const getMovesByGameIdAPI = async (gameId: number) => {
   return response.data;
 };
 
+export const getAllMovesAPI = async () => {
+  const response = await axios.get(`${baseUrl}/moves`);
+  return response.data;
+}
+
 export const getMoveAPI = async (moveId: number) => {
   const response = await axios.get(`${baseUrl}/moves/${moveId}`);
   return response.data;

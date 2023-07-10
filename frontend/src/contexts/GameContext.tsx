@@ -9,6 +9,7 @@ export interface GameContextProps {
 
 export const defaultState: GameState = {
     games: [],
+    allmoves: [],
     searchedGame: null,
     displayedMoves: [],
   };

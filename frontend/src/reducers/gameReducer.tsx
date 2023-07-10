@@ -12,6 +12,11 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
                 ...state,
                 searchedGame: action.payload,
             };
+        case 'SET_ALL_MOVES': 
+            return {
+                ...state,
+                allmoves: action.payload,
+            };
         case 'SET_DISPLAYED_MOVES':
             return {
                 ...state,

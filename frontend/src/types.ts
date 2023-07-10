@@ -23,6 +23,7 @@ export interface Move {
 
 export interface GameState {
     games: Game[];
+    allmoves: Move[];
     searchedGame: Game | null;
     displayedMoves: Move[];
 }
@@ -47,4 +48,9 @@ interface AddMoveAction {
     payload: Move;
 }
 
-export type GameAction = SetSearchedGameAction | SetDisplayedMovesAction | AddGameAction | AddMoveAction;
+interface SetAllMovesAction {
+    type: 'SET_ALL_MOVES';
+    payload: Move[];
+}
+
+export type GameAction = SetSearchedGameAction | SetDisplayedMovesAction | AddGameAction | AddMoveAction | SetAllMovesAction;
