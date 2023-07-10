@@ -28,8 +28,8 @@ const NewMoveForm = ({ game }: NewMoveFormProps) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const createdMove: Move = await createMoveAPI(newMove);
-            dispatch({ type: 'SET_DISPLAYED_MOVES', payload: [...state.displayedMoves, createdMove] });
+            await createMoveAPI(newMove);
+            dispatch({ type: 'SET_DISPLAYED_MOVES', payload: [...state.displayedMoves, newMove] });
             setNewMove(initialNewMove);
         } catch (error) {
             console.error(error);

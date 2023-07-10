@@ -23,8 +23,8 @@ const NewGameForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const createdGame = await createGameAPI(newGame);
-      dispatch({ type: 'ADD_GAME', payload: createdGame });
+      await createGameAPI(newGame);
+      dispatch({ type: 'ADD_GAME', payload: newGame });
       setNewGame(initialNewGame);
     } catch (error) {
       console.error(error);
