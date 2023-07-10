@@ -17,14 +17,14 @@ const initialNewGame: Game = {
 
 const NewGameForm: React.FC = () => {
   const [newGame, setNewGame] = useState<Game>(initialNewGame); 
-  const { dispatch } = useContext(GameContext);
+  const { state, dispatch } = useContext(GameContext);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       await createGameAPI(newGame);
-      dispatch({ type: 'ADD_GAME', payload: newGame });
+      dispatch({ type: 'SET_GAMES', payload: [...state.games, newGame] });
       setNewGame(initialNewGame);
     } catch (error) {
       console.error(error);

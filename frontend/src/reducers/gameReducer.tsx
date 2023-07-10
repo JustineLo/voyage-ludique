@@ -2,10 +2,10 @@ import { GameAction, GameState } from '../types';
 
 export const gameReducer = (state: GameState, action: GameAction): GameState => {
     switch (action.type) {
-        case 'ADD_GAME':
+        case 'SET_GAMES':
             return {
                 ...state,
-                games: [...state.games, action.payload],
+                games: action.payload,
             };
         case 'SET_SEARCHED_GAME':
             return {

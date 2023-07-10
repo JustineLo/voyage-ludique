@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import { gameReducer } from "./reducers/gameReducer";
 import { GameContext, defaultState } from "./contexts/GameContext";
 import Layout from "./layout/Layout";
@@ -6,10 +6,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NewGame from "./pages/NewGame";
 import GameDetail from "./pages/GameDetails";
+import { getAllGamesAPI } from "./services/gameService";
 
 
 function App() {
   const [state, dispatch] = useReducer(gameReducer, defaultState);
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const games = await getAllGamesAPI();
+        dispatch({ type: 'SET_GAMES', payload: games });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchGames();
+  }, []);
 
   return (
       <GameContext.Provider value={{ state, dispatch }}>

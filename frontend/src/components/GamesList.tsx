@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const GamesList: React.FC = () => {
 
   const { state } = useContext(GameContext);
-  console.log(state.games);
+
   return (
     <div>
       {state.games.length > 0 ? (

@@ -38,8 +38,8 @@ interface SetDisplayedMovesAction {
 }
 
 interface AddGameAction {
-    type: 'ADD_GAME';
-    payload: Game;
+    type: 'SET_GAMES';
+    payload: Game[];
 }
 
 interface AddMoveAction {
