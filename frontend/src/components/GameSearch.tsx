@@ -13,8 +13,9 @@ const GameSearch: React.FC = () => {
   useEffect(() => {
     const fetchGameMoves = async () => {
       if(!searchedGame) {
-        latestMoves = await getLatestMovesAPI();
-        dispatch({ type: 'SET_DISPLAYED_MOVES', payload: latestMoves });
+        const queriedMoves: Move[] = await getLatestMovesAPI();
+        latestMoves = queriedMoves;
+        dispatch({ type: 'SET_DISPLAYED_MOVES', payload: queriedMoves });
       } else {
         const gameMoves: Move[] = await getMovesByGameIdAPI(searchedGame.id);
         dispatch({ type: 'SET_DISPLAYED_MOVES', payload: gameMoves });
@@ -41,15 +42,38 @@ const GameSearch: React.FC = () => {
     setSearchList(nameList);
   }
 
+  function handleClickFilter(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const filter = e.currentTarget.id;
+
+    switch(filter) {
+      case 'name':
+        const nameList = state.games.map((game: Game) => game.name);
+        setSearchList(nameList);
+        break;
+      case 'id':
+        const idList = state.games.map((game: Game) => game.id.toString());
+        setSearchList(idList);
+        break;
+      case 'person':
+        const giverList = state.allmoves.map((move: Move) => move.giver);
+        const receiverList = state.allmoves.map((move: Move) => move.receiver);
+        setSearchList([...new Set([...giverList, ...receiverList])]);
+        break;
+      case 'city':
+        const originCityList = state.allmoves.map((move: Move) => move.originCity);
+        const currentCityList = state.allmoves.map((move: Move) => move.currentCity);
+        setSearchList([...new Set([...originCityList, ...currentCityList])]);
+    }
+  }
 
   return (
     <>
       <div>
         <ButtonGroup>
-          <Button onClick={handleClickName}>Nom du jeu</Button>
-          <Button>ID</Button>
-          <Button>Personne</Button>
-          <Button>Ville</Button>
+          <Button id="name" onClick={(e) => handleClickFilter(e)}>Nom du jeu</Button>
+          <Button id="id" onClick={(e) => handleClickFilter(e)}>ID</Button>
+          <Button id="person" onClick={(e) => handleClickFilter(e)}>Personne</Button>
+          <Button id="city" onClick={(e) => handleClickFilter(e)}>Ville</Button>
           
         </ButtonGroup>
       </div>
@@ -67,8 +91,6 @@ const GameSearch: React.FC = () => {
         />
       )}
     />
-
-
     </>
   );
 }
