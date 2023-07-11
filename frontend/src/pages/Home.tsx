@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom"
-import GamesList from "../components/GamesList"
 import GameSearch from "../components/GameSearch"
 import MovesList from "../components/MovesList"
+import { styled } from "styled-components"
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+`
 
 function Home() {
     return (
-        <div>
+        <Container>
             <GameSearch />
             <MovesList />
-            <GamesList />
-            <Link to="/ajouter-jeu">Ajouter un jeu</Link>
             
-        </div>
+        </Container>
     )
 }
 
-export default Home
+export default Home 

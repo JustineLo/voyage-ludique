@@ -8,6 +8,8 @@ import NewGame from "./pages/NewGame";
 import GameDetail from "./pages/GameDetails";
 import { getAllGamesAPI } from "./services/gameService";
 import { getAllMovesAPI } from "./services/moveService";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./layout/theme";
 
 
 function App() {
@@ -28,15 +30,17 @@ function App() {
 
   return (
       <GameContext.Provider value={{ state, dispatch }}>
-        <Layout>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path='ajouter-jeu' element={<NewGame />} />
-              <Route path='jeu/:gameId' element={<GameDetail />} />
-            </Routes>
-          </BrowserRouter>
-        </Layout>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path='ajouter-jeu' element={<NewGame />} />
+                <Route path='jeu/:gameId' element={<GameDetail />} />
+              </Routes>
+            </BrowserRouter>
+          </Layout>
+        </ThemeProvider>
       </GameContext.Provider>
   );
 }
