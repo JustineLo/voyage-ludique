@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #FDC000;
-    --secondary-color: #00C3B5;
-    --tertiary-color: #F85F73;
+    --primary: #FDC000;
+    --secondary: #00C3B5;
+    --tertiary: #F85F73;
     --bg-light: #F5F2EA;
     --text-dark: #333333;
 
@@ -10,4 +10,8 @@
 body {
     margin: 0;
     color: var(--text-dark);
+}
+
+table {
+    border-radius: 40px !important;
 }
