@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
-import { GameContext } from '../contexts/GameContext';
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { GameContext } from "../contexts/GameContext";
+import { Link } from "react-router-dom";
 
 const GamesList: React.FC = () => {
-
   const { state } = useContext(GameContext);
 
   return (
@@ -11,7 +10,11 @@ const GamesList: React.FC = () => {
       {state.games.length > 0 ? (
         <ul>
           {state.games.map((game) => {
-            return <li key={game.id}><Link to={`jeu/${game.id}`}>{game.name}</Link></li>;
+            return (
+              <li key={game.id}>
+                <Link to={`/jeu/${game.id}`}>{game.name}</Link>
+              </li>
+            );
           })}
         </ul>
       ) : (
@@ -19,6 +22,6 @@ const GamesList: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
 export default GamesList;
