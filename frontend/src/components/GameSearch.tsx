@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TextField, Button, ButtonGroup, Autocomplete } from "@mui/material";
+import { TextField, Autocomplete } from "@mui/material";
 import { GameContext, GameContextProps } from "../contexts/GameContext";
 import { Game, Move } from "../types";
 import { getLatestMovesAPI } from "../services/moveService";
@@ -16,6 +16,29 @@ const Container = styled.div`
 
   h3 {
     margin: 0;
+  }
+`;
+
+const Buttons = styled.div`
+  button {
+    background-color: transparent;
+    color: var(--primary);
+    outline: none;
+    border: 1px solid var(--primary);
+    padding: 0.5rem 1rem;
+  }
+
+  button:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+  }
+
+  button:nth-child(4) {
+    border-radius: 0 5px 5px 0;
+  }
+
+  .active {
+    background-color: var(--primary);
+    color: white;
   }
 `;
 
@@ -111,20 +134,36 @@ const GameSearch: React.FC = () => {
   return (
     <Container>
       <h3>Rechercher</h3>
-      <ButtonGroup>
-        <Button id="name" onClick={(e) => handleClickFilter(e)}>
+      <Buttons>
+        <button
+          className={selectedFilter === "name" ? "active" : ""}
+          id="name"
+          onClick={(e) => handleClickFilter(e)}
+        >
           Nom du jeu
-        </Button>
-        <Button id="id" onClick={(e) => handleClickFilter(e)}>
+        </button>
+        <button
+          className={selectedFilter === "id" ? "active" : ""}
+          id="id"
+          onClick={(e) => handleClickFilter(e)}
+        >
           ID
-        </Button>
-        <Button id="person" onClick={(e) => handleClickFilter(e)}>
+        </button>
+        <button
+          className={selectedFilter === "person" ? "active" : ""}
+          id="person"
+          onClick={(e) => handleClickFilter(e)}
+        >
           Personne
-        </Button>
-        <Button id="city" onClick={(e) => handleClickFilter(e)}>
+        </button>
+        <button
+          className={selectedFilter === "city" ? "active" : ""}
+          id="city"
+          onClick={(e) => handleClickFilter(e)}
+        >
           Ville
-        </Button>
-      </ButtonGroup>
+        </button>
+      </Buttons>
       <Autocomplete
         options={searchList}
         color="primary"
