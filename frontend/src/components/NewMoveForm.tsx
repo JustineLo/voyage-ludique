@@ -96,7 +96,7 @@ const NewMoveForm = ({ game }: NewMoveFormProps) => {
       </Fields>
 
       <Button type="submit" variant="contained" sx={{ ml: 1 }}>
-        Add New Move
+        AJOUTER
       </Button>
     </Container>
   );

@@ -32,7 +32,7 @@ function Navbar() {
   return (
     <AppbarContainer>
       <h2>
-        <Link to="/">Voyage Ludique</Link>
+        <Link to="/">La Quête Ludique</Link>
       </h2>
       <Buttons>
         <Button onClick={() => navigate("/ajouter-jeu")}>Ajouter un jeu</Button>

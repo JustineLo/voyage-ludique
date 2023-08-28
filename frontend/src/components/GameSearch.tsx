@@ -71,7 +71,7 @@ const GameSearch: React.FC = () => {
           state.games.find((game: Game) => game.name === value) || null;
         if (searchedGame) {
           const displayedMoves: Move[] = state.allmoves.filter(
-            (move: Move) => move.gameId === searchedGame.id
+            (move: Move) => move.gameId == searchedGame.id
           );
           dispatch({ type: "SET_DISPLAYED_MOVES", payload: displayedMoves });
         } else {
