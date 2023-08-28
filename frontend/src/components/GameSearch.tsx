@@ -44,9 +44,7 @@ const Buttons = styled.div`
 
 const GameSearch: React.FC = () => {
   const { state, dispatch } = useContext<GameContextProps>(GameContext);
-  const [searchList, setSearchList] = useState<string[]>(
-    state.games.map((game: Game) => game.name)
-  );
+  const [searchList, setSearchList] = useState<string[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<string>("name");
   const [latestMoves, setLatestMoves] = useState<Move[]>([]);
 
@@ -58,6 +56,10 @@ const GameSearch: React.FC = () => {
     }
     fetchLatestMoves();
   }, []);
+
+  useEffect(() => {
+    setSearchList(state.games.map((game: Game) => game.name));
+  }, [state.games]);
 
   const handleSearch = (value: string | null) => {
     if (!value) {
@@ -164,23 +166,25 @@ const GameSearch: React.FC = () => {
           Ville
         </button>
       </Buttons>
-      <Autocomplete
-        options={searchList}
-        color="primary"
-        sx={{ width: 300 }}
-        onChange={(e, value) => handleSearch(value)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            color="primary"
-            sx={{ borderRadius: 40 }}
-            InputProps={{
-              ...params.InputProps,
-              type: "search",
-            }}
-          />
-        )}
-      />
+      {searchList.length !== 0 && (
+        <Autocomplete
+          options={searchList}
+          color="primary"
+          sx={{ width: 300 }}
+          onChange={(e, value) => handleSearch(value)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              color="primary"
+              sx={{ borderRadius: 40 }}
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+              }}
+            />
+          )}
+        />
+      )}
     </Container>
   );
 };
